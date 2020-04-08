@@ -9,6 +9,8 @@ import {map} from 'rxjs/operators';
 
 const dateFormat = 'DD.MM.YYYY.';
 
+let productListToRender: Product[];
+
 export function returnFileSize(number: number): string {
     if (number < 1024) {
         return number + 'bytes';
@@ -89,6 +91,7 @@ export function render(chart: Chart, state: State, search: string, sumAll: boole
     }
 
     let total = 0;
+    productListToRender = [];
 
     const series: ApexAxisChartSeries = [] as ApexAxisChartSeries;
     if (!sumAll) {
@@ -97,7 +100,8 @@ export function render(chart: Chart, state: State, search: string, sumAll: boole
                 person.products.forEach((product, index) => {
                     // if (search ? product.name.toLowerCase().includes(search.toLowerCase()) : true) {
                     if (checkSearch(search, product.name)) {
-                        renderProduct(product, productStateChange);
+                        //renderProduct(product, productStateChange);
+                        productListToRender.push(product);
                         if (product.active) {
                             total += product.dates.size;
                             const productData = [] as { x: Date, y: number }[];
@@ -128,7 +132,8 @@ export function render(chart: Chart, state: State, search: string, sumAll: boole
                 person.products.forEach((product: Product) => {
                     // if (search ? product.name.toLowerCase().includes(search.toLowerCase()) : true) {
                     if (checkSearch(search, product.name)) {
-                        renderProduct(product, productStateChange);
+                        // renderProduct(product, productStateChange);
+                        productListToRender.push(product);
                         if (product.active) {
                             total += product.dates.size;
                             product.dates.forEach((value, key) => {
@@ -147,7 +152,6 @@ export function render(chart: Chart, state: State, search: string, sumAll: boole
             }
         });
         const productData = [] as { x: Date, y: number }[];
-
         for (let itDate: Moment = moment(state.dateMin); itDate.isSameOrBefore(state.dateMax, 'month'); itDate.add(1, 'month')) {
             const count: number | undefined = allDates.get(itDate.format(dateFormat));
             productData.push(
@@ -162,6 +166,11 @@ export function render(chart: Chart, state: State, search: string, sumAll: boole
             data: productData
         });
     }
+    productListToRender.sort((a, b) => b.count - a.count);
+    productListToRender.forEach(p => {
+        renderProduct(p, productStateChange);
+    });
+
     const pTotal: HTMLElement | null = document.querySelector('#spanTotal');
     if (pTotal) {
         pTotal.innerText = total.toString();
