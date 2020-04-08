@@ -42,7 +42,8 @@ export class Chart {
             xaxis: {
                 type: 'datetime',
                 title: {
-                    text: 'Vreme'
+                    text: 'Vreme',
+                    offsetY: 10
                 },
                 labels: {
                     datetimeFormatter: {
@@ -55,8 +56,8 @@ export class Chart {
                 }
             },
             yaxis: {
-                // min: 0,
-                // max: 20,
+                min: 0,
+                max: 20,
                 title: {
                     text: 'Porudzbine'
                 }

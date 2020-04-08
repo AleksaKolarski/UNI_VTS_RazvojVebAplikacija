@@ -1,10 +1,11 @@
 import {Product} from './model/product.model';
 import Papa, {ParseResult} from 'papaparse';
-import {Observable} from 'rxjs';
+import {fromEvent, Observable} from 'rxjs';
 import {Chart} from './chart';
 import moment, {Moment} from 'moment';
 import {State} from './model/state.model';
 import {Person} from './model/person.model';
+import {map} from 'rxjs/operators';
 
 const dateFormat = 'DD.MM.YYYY.';
 
@@ -78,20 +79,27 @@ function parseResult(result: ParseResult, state: State): Product[] {
     return productList;
 }
 
+export function render(chart: Chart, state: State, search: string, sumAll: boolean, productStateChange: any) {
+    console.log('Rendering...');
+    const divProductList: HTMLElement | null = document.querySelector('#divProductList');
+    if (divProductList) {
+        while (divProductList.lastElementChild) {
+            divProductList.removeChild(divProductList.lastElementChild);
+        }
+    }
 
-// export function render(chart: Chart, state: State, search: string, sumAll: boolean) {
-//     const series: ApexAxisChartSeries = [] as ApexAxisChartSeries;
-// }
+    let total = 0;
 
-export function render(chart: Chart, state: State, search: string, sumAll: boolean) {
     const series: ApexAxisChartSeries = [] as ApexAxisChartSeries;
-
     if (!sumAll) {
         state.persons.forEach((person) => {
             if (person.active) {
                 person.products.forEach((product, index) => {
-                    if (product.active) {
-                        if (search ? product.name.toLowerCase().includes(search.toLowerCase()) : true) {
+                    // if (search ? product.name.toLowerCase().includes(search.toLowerCase()) : true) {
+                    if (checkSearch(search, product.name)) {
+                        renderProduct(product, productStateChange);
+                        if (product.active) {
+                            total += product.dates.size;
                             const productData = [] as { x: Date, y: number }[];
                             if (state.dateMin && state.dateMax) {
                                 for (let itDate: Moment = moment(state.dateMin); itDate.isSameOrBefore(state.dateMax, 'month'); itDate.add(1, 'month')) {
@@ -118,8 +126,11 @@ export function render(chart: Chart, state: State, search: string, sumAll: boole
         state.persons.forEach((person: Person) => {
             if (person.active) {
                 person.products.forEach((product: Product) => {
-                    if (product.active) {
-                        if (search ? product.name.toLowerCase().includes(search.toLowerCase()) : true) {
+                    // if (search ? product.name.toLowerCase().includes(search.toLowerCase()) : true) {
+                    if (checkSearch(search, product.name)) {
+                        renderProduct(product, productStateChange);
+                        if (product.active) {
+                            total += product.dates.size;
                             product.dates.forEach((value, key) => {
                                 if (allDates.has(key)) {
                                     const currValue = allDates.get(key);
@@ -151,6 +162,52 @@ export function render(chart: Chart, state: State, search: string, sumAll: boole
             data: productData
         });
     }
-    console.log(series);
+    const pTotal: HTMLElement | null = document.querySelector('#spanTotal');
+    if (pTotal) {
+        pTotal.innerText = total.toString();
+    }
     chart.updateSeries(series as []);
+}
+
+function renderProduct(product: Product, productStateChange: any): void {
+    const divProductList: HTMLElement | null = document.querySelector('#divProductList');
+    if (divProductList) {
+        const div = document.createElement('div');
+        div.id = 'div-product-' + product.name;
+
+        const chk = document.createElement('input');
+        chk.type = 'checkbox';
+        chk.checked = product.active;
+        fromEvent(chk, 'change')
+            .pipe(
+                map<Event, boolean>((event: Event) => {
+                    return (event.target as HTMLInputElement).checked;
+                })
+            )
+            .subscribe(
+                value => {
+                    productStateChange(product, value);
+                }
+            );
+
+        const span = document.createElement('span');
+        span.innerText = product.dates.size + ': ' + product.name;
+
+        div.appendChild(chk);
+        div.appendChild(span);
+        divProductList?.appendChild(div);
+    }
+}
+
+function checkSearch(searchTerm: string, searchTarget: string): boolean {
+    const searchTermList: string[] = searchTerm.toLowerCase().split(' ').filter(s => s !== '');
+    const searchTargetList: string[] = searchTarget.toLowerCase().split(' ').filter(s => s !== '');
+
+    let foundAll = true;
+    searchTermList.forEach(sTerm => {
+        if (!searchTargetList.find(s => s === sTerm)) {
+            foundAll = false;
+        }
+    });
+    return foundAll;
 }

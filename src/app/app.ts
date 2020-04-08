@@ -5,6 +5,7 @@ import {Person} from './model/person.model';
 import * as utils from './utils';
 import {returnFileSize} from './utils';
 import {State} from './model/state.model';
+import {Product} from './model/product.model';
 
 export const run = () => {
     let chart: Chart;
@@ -76,6 +77,7 @@ export const run = () => {
 
                                             const chk = document.createElement('input');
                                             chk.type = 'checkbox';
+                                            chk.checked = person.active;
                                             fromEvent(chk, 'change')
                                                 .pipe(
                                                     map<Event, boolean>((event: Event) => {
@@ -119,10 +121,15 @@ export const run = () => {
     function render() {
         if(inpSearch && chkSum){
             if(inpSearch.value.length <= 2){
-                utils.render(chart, new State(), '', chkSum.checked);
+                utils.render(chart, new State(), '', chkSum.checked, productStateChange);
             } else {
-                utils.render(chart, state, inpSearch.value, chkSum.checked);
+                utils.render(chart, state, inpSearch.value, chkSum.checked, productStateChange);
             }
         }
     }
+
+    const productStateChange = (product: Product, checked: boolean) => {
+        product.active = checked;
+        render();
+    };
 };
