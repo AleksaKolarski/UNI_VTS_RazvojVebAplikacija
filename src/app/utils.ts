@@ -200,7 +200,7 @@ function renderProduct(product: Product, productStateChange: any): void {
             );
 
         const span = document.createElement('span');
-        span.innerText = product.dates.size + ': ' + product.name;
+        span.innerHTML = product.dates.size + ': <b>' + product.name + '</b> - ' + product.owner?.name;
 
         div.appendChild(chk);
         div.appendChild(span);
