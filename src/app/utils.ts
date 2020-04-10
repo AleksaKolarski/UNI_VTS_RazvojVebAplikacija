@@ -166,7 +166,7 @@ export function render(chart: Chart, state: State, search: string, sumAll: boole
             data: productData
         });
     }
-    productListToRender.sort((a, b) => b.count - a.count);
+    productListToRender.sort((a, b) => b.dates.size - a.dates.size);
     productListToRender.forEach(p => {
         renderProduct(p, productStateChange);
     });
