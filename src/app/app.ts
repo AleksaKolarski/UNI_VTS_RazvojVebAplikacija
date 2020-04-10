@@ -70,6 +70,9 @@ export const run = () => {
                                     .subscribe(
                                         products => {
                                             const person: Person = new Person(file.name, products, file.size, file.lastModified);
+                                            products.forEach(p => {
+                                                p.owner = person;
+                                            });
                                             state.persons.set(file.name, person);
 
                                             const div = document.createElement('div');
