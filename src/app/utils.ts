@@ -210,7 +210,9 @@ function renderProduct(product: Product, productStateChange: any): void {
 
 function checkSearch(searchTerm: string, searchTarget: string): boolean {
     searchTerm = sanitizeLatin(searchTerm);
+    searchTerm = sanitizeSpecial(searchTerm);
     searchTarget = sanitizeLatin(searchTarget);
+    searchTarget = sanitizeSpecial(searchTarget);
 
     const searchTermList: string[] = searchTerm.toLowerCase().split(' ').filter(s => s !== '');
     const searchTargetList: string[] = searchTarget.toLowerCase().split(' ').filter(s => s !== '');
@@ -229,5 +231,10 @@ function sanitizeLatin(s: string): string {
     s = s.replace(new RegExp("[čČćĆ]", 'g'),"c");
     s = s.replace(new RegExp("[žŽ]", 'g'),"z");
     s = s.replace(new RegExp("[šŠ]", 'g'),"s");
+    return s;
+}
+
+function sanitizeSpecial(s: string): string {
+    s = s.replace(/[:\/=\-`!?~@$#%^&*()<>,.;'"\\{}\[\]_+|]/g," ");
     return s;
 }
