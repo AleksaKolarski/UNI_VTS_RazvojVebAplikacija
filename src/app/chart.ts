@@ -17,6 +17,9 @@ export class Chart {
                 },
                 toolbar: {
                     show: false
+                },
+                zoom: {
+                    enabled: false
                 }
             },
             plotOptions: {

@@ -1,0 +1,56 @@
+@import "variables.less";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: @background-color;
+  font-family: @font-family;
+
+  color: #555;
+
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: auto auto auto auto;
+}
+
+
+#div-person-list {
+  .div-person {
+    margin: 2px 0;
+    padding: 3px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    background-color: lighten(@background-color, 3%);
+
+    display: flex;
+    align-items: center;
+
+    box-shadow: 2px 2px 4px #999;
+
+    .span-person-name{
+      //display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      margin-right: 2px;
+    }
+
+    button {
+
+      margin-left: 4px;
+      color: inherit;
+      background-color: transparent;
+      cursor: pointer;
+
+      padding: 2px;
+      border: 1px solid black;
+      border-radius: 3px;
+      line-height: 12px;
+      font-size: 12px;
+    }
+  }
+}

@@ -1,4 +1,4 @@
 import {run} from './app/app';
-import './main.less';
+import './style/main.less';
 
 run();

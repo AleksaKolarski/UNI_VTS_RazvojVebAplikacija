@@ -23,7 +23,7 @@ export const run = () => {
     inpSearch = document.querySelector('#inpSearch');
     chkSum = document.querySelector('#chkSum');
     inpFile = document.querySelector('#inpFile');
-    divPersonList = document.querySelector('#divPersonList');
+    divPersonList = document.querySelector('#div-person-list');
     if (inpSearch && chkSum && inpFile && divPersonList) {
 
         // TEXT INPUT
@@ -76,6 +76,7 @@ export const run = () => {
                                             state.persons.set(file.name, person);
 
                                             const div = document.createElement('div');
+                                            div.classList.add('div-person');
                                             div.id = 'div-person-' + person.name;
 
                                             const chk = document.createElement('input');
@@ -95,10 +96,14 @@ export const run = () => {
                                                 );
 
                                             const span = document.createElement('span');
-                                            span.innerText = person.name + ' (' + returnFileSize(person.fileSize) + ')';
+                                            span.classList.add('span-person-name');
+                                            span.innerText = person.name;
+
+                                            const spanSize = document.createElement('span');
+                                            spanSize.innerText = '(' + returnFileSize(person.fileSize) + ')';
 
                                             const button = document.createElement('button');
-                                            button.innerText = 'X';
+                                            button.innerHTML = '&#x1F5D9';
                                             fromEvent(button, 'click')
                                                 .subscribe(
                                                     value => {
@@ -109,6 +114,7 @@ export const run = () => {
                                                 );
                                             div.appendChild(chk);
                                             div.appendChild(span);
+                                            div.appendChild(spanSize);
                                             div.appendChild(button);
                                             divPersonList?.appendChild(div);
                                             render();
