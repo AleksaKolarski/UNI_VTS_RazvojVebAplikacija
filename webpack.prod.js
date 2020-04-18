@@ -28,6 +28,14 @@ module.exports = merge(common, {
                     "sass-loader" // 1. Turns sass into css
                 ]
             },
+            {
+                test: /\.less$/,
+                use: [
+                    MiniCssExtractPlugin.loader, // 3. Extract css into files
+                    "css-loader", // 2. Turns css into commonjs
+                    "less-loader" // 1. Turns less into css
+                ]
+            },
         ]
     }
 });
