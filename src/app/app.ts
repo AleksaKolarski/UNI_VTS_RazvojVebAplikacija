@@ -26,6 +26,14 @@ export const run = () => {
     divPersonList = document.querySelector('#div-person-list');
     if (inpSearch && chkSum && inpFile && divPersonList) {
 
+        // TEXT INPUT AUTOFOCUS
+        fromEvent(document, 'keydown')
+            .subscribe(
+                value => {
+                    if (inpSearch) inpSearch.focus();
+                }
+            );
+
         // TEXT INPUT
         fromEvent(inpSearch, 'input')
             .pipe(
