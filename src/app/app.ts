@@ -130,6 +130,7 @@ export const run = () => {
                                     );
                             }
                         });
+                        if (inpFile) inpFile.value = '';
                     }
                 }
             );
