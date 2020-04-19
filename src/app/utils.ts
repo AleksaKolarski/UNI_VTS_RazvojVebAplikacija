@@ -179,6 +179,7 @@ function renderProduct(product: Product, productStateChange: any): void {
     if (divProductList) {
         const div = document.createElement('div');
         div.id = 'div-product-' + product.name;
+        div.classList.add('div-product')
 
         const chk = document.createElement('input');
         chk.type = 'checkbox';

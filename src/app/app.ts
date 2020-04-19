@@ -108,6 +108,7 @@ export const run = () => {
                                             span.innerText = person.name;
 
                                             const spanSize = document.createElement('span');
+                                            spanSize.classList.add('span-person-size');
                                             spanSize.innerText = '(' + returnFileSize(person.fileSize) + ')';
 
                                             const button = document.createElement('button');

@@ -3,26 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>KP Analyzer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 </head>
 <body>
-<div style="grid-column: 1; grid-row: 1">
-    <label for="inpFile">Choose files</label>
-    <input type="file" id="inpFile" accept=".csv" multiple="true">
+
+<div id="div-person-list-wrapper">
+    <div id="div-person-list-file">
+        <label for="inpFile">Choose files:</label>
+        <button type="button" onclick="document.getElementById('inpFile').click()">Browse</button>
+        <input type="file" id="inpFile" accept=".csv" multiple>
+    </div>
     <div id="div-person-list">
         <!-- List of choosen files -->
     </div>
 </div>
-<div id="chart" style="grid-column: 2; grid-row: 1"></div>
-<div style="grid-column: 1/3; grid-row: 2;">
-    <label for="inpSearch">Search</label>
-    <input type="text" id="inpSearch">
-    <label for="chkSum">Sum all</label>
-    <input type="checkbox" id="chkSum" checked>
-    <span>Total: </span><span id="spanTotal"></span>
+
+<div id="chart"></div>
+
+<div id="div-search-wrapper">
+    <div id="div-search">
+        <div>
+            <label for="inpSearch">Search:</label>
+            <input type="text" id="inpSearch"> <!--onblur="this.focus()" autofocus-->
+        </div>
+        <div>
+            <label for="chkSum">Sum all:</label>
+            <input type="checkbox" id="chkSum" checked>
+            <span>Total: </span><span id="spanTotal">0</span>
+        </div>
+    </div>
+
+    <div id="divProductList">
+        <!-- List of search results -->
+    </div>
 </div>
 
-<div id="divProductList" style="grid-column: 1/3; grid-row: 3;">
-    <!-- List of search results -->
-</div>
 </body>
 </html>

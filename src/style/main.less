@@ -7,50 +7,173 @@
 body {
   background: @background-color;
   font-family: @font-family;
+  color: @font-color;
 
-  color: #555;
+  margin: 0;
+  @media @phone {
+    margin: 8px;
+  }
 
   display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 300px 1fr;
-  grid-template-rows: auto auto auto auto;
+  grid-gap: 0;
+  grid-template-columns: minmax(auto, 400px) 1fr;
+
+  @media @phone {
+    grid-gap: 0.8rem;
+  }
 }
 
+#div-person-list-wrapper {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
 
-#div-person-list {
-  .div-person {
-    margin: 2px 0;
-    padding: 3px;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    background-color: lighten(@background-color, 3%);
+  @media @desktop {
+    grid-column-end: 2;
+  }
 
+  #div-person-list-file {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
 
-    box-shadow: 2px 2px 4px #999;
-
-    .span-person-name{
-      //display: block;
-      overflow: hidden;
+    * {
+      display: inline-block;
       white-space: nowrap;
-      text-overflow: ellipsis;
-
-      margin-right: 2px;
     }
 
-    button {
+    > :first-child {
+      margin-right: 5px;
+    }
 
-      margin-left: 4px;
-      color: inherit;
-      background-color: transparent;
-      cursor: pointer;
+    #inpFile {
+      display: none;
+    }
+  }
 
-      padding: 2px;
-      border: 1px solid black;
+  #div-person-list {
+    .div-person {
+      margin: 2px 0;
+      padding: 3px;
       border-radius: 3px;
-      line-height: 12px;
-      font-size: 12px;
+      border: 1px solid #ccc;
+      background-color: lighten(@background-color, 3%);
+      box-shadow: 2px 2px 4px #999;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+
+      @media @phone {
+        flex-wrap: nowrap;
+      }
+
+      input[type=checkbox] {
+        order: 1;
+      }
+
+      .span-person-name {
+        width: 100%;
+        margin-right: 2px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        order: 3;
+
+        @media @phone {
+          order: 2;
+        }
+      }
+
+      .span-person-size {
+        display: none;
+
+        @media @phone {
+          display: inline-block;
+          order: 3;
+        }
+      }
+
+      button {
+        margin-left: 4px;
+        padding: 2px;
+        border: 1px solid black;
+        border-radius: 3px;
+        color: inherit;
+        background-color: transparent;
+        cursor: pointer;
+        line-height: 0.75rem;
+        font-size: 0.75rem;
+        order: 2;
+
+        @media @phone {
+          order: 4;
+        }
+      }
+    }
+  }
+}
+
+#chart {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+
+  @media @desktop {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+  }
+}
+
+#div-search-wrapper {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
+
+  @media @desktop {
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+
+  margin-bottom: 32px;
+  padding: 6px;
+  border: 1px solid black;
+  border-radius: 3px;
+  box-shadow: 2px 2px 4px #999;
+  background-color: lighten(@background-color, 3%);
+
+  #div-search {
+    > div:first-child {
+      margin-bottom: 5px;
+    }
+
+    #inpSearch {
+      border-radius: 3px;
+      border: 1px solid black;
+      padding: 2px 3px;
+      max-width: 100%;
+    }
+
+    #spanTotal {
+      font-weight: bold;
+    }
+  }
+
+  #divProductList {
+    .div-product:first-child {
+      border-top: 1px solid black;
+      padding-top: 4px;
+      margin-top: 6px;
+    }
+
+    .div-product {
+      span {
+        word-wrap: break-word;
+      }
     }
   }
 }
