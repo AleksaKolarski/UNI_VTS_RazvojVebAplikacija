@@ -5,7 +5,6 @@ export class Person {
     products: Product[];
     fileSize: number;
     modified: number;
-
     active: boolean;
 
     constructor(name: string, products: Product[], fileSize: number, modified: number) {

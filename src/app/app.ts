@@ -1,6 +1,6 @@
 import {Chart} from './chart';
 import {fromEvent} from 'rxjs';
-import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import {Person} from './model/person.model';
 import * as utils from './utils';
 import {returnFileSize} from './utils';
@@ -128,8 +128,8 @@ export const run = () => {
     }
 
     function render() {
-        if(inpSearch && chkSum){
-            if(inpSearch.value.length <= 2){
+        if (inpSearch && chkSum) {
+            if (inpSearch.value.length <= 2) {
                 utils.render(chart, new State(), '', chkSum.checked, productStateChange);
             } else {
                 utils.render(chart, state, inpSearch.value, chkSum.checked, productStateChange);

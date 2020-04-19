@@ -25,7 +25,7 @@ export class Chart {
             plotOptions: {
                 bar: {
                     horizontal: false,
-                    columnWidth: '40px',
+                    columnWidth: '80%',
                 }
             },
             series: [   // lista proizvoda
@@ -70,7 +70,25 @@ export class Chart {
             },
             legend: {
                 show: false
-            }
+            },
+            responsive: [
+                {
+                    breakpoint: 481,
+                    options: {
+                        chart: {
+                            height: 450
+                        }
+                    }
+                },
+                {
+                    breakpoint: 129,
+                    options: {
+                        chart: {
+                            height: 170
+                        }
+                    }
+                }
+            ]
         };
         this.chart = new ApexCharts(document.querySelector(selector), this.defaultOptions);
     }

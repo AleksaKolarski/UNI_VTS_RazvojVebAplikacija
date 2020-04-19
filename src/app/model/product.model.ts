@@ -5,7 +5,6 @@ export class Product {
     public count: number;
     public dates: Map<string, number>;
     public owner: Person | null;
-
     public active: boolean;
 
     constructor(name: string, count: number) {

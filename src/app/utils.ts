@@ -98,9 +98,7 @@ export function render(chart: Chart, state: State, search: string, sumAll: boole
         state.persons.forEach((person) => {
             if (person.active) {
                 person.products.forEach((product, index) => {
-                    // if (search ? product.name.toLowerCase().includes(search.toLowerCase()) : true) {
                     if (checkSearch(search, product.name)) {
-                        //renderProduct(product, productStateChange);
                         productListToRender.push(product);
                         if (product.active) {
                             total += product.dates.size;
@@ -130,9 +128,7 @@ export function render(chart: Chart, state: State, search: string, sumAll: boole
         state.persons.forEach((person: Person) => {
             if (person.active) {
                 person.products.forEach((product: Product) => {
-                    // if (search ? product.name.toLowerCase().includes(search.toLowerCase()) : true) {
                     if (checkSearch(search, product.name)) {
-                        // renderProduct(product, productStateChange);
                         productListToRender.push(product);
                         if (product.active) {
                             total += product.dates.size;
@@ -227,14 +223,14 @@ function checkSearch(searchTerm: string, searchTarget: string): boolean {
 }
 
 function sanitizeLatin(s: string): string {
-    s = s.replace(new RegExp("[đĐ]", 'g'),"dj");
-    s = s.replace(new RegExp("[čČćĆ]", 'g'),"c");
-    s = s.replace(new RegExp("[žŽ]", 'g'),"z");
-    s = s.replace(new RegExp("[šŠ]", 'g'),"s");
+    s = s.replace(new RegExp('[đĐ]', 'g'), 'dj');
+    s = s.replace(new RegExp('[čČćĆ]', 'g'), 'c');
+    s = s.replace(new RegExp('[žŽ]', 'g'), 'z');
+    s = s.replace(new RegExp('[šŠ]', 'g'), 's');
     return s;
 }
 
 function sanitizeSpecial(s: string): string {
-    s = s.replace(/[:\/=\-`!?~@$#%^&*()<>,.;'"\\{}\[\]_+|]/g," ");
+    s = s.replace(/[:\/=\-`!?~@$#%^&*()<>,.;'"\\{}\[\]_+|]/g, ' ');
     return s;
 }
